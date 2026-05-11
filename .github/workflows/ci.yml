@@ -1,0 +1,20 @@
+name: HRM CI Pipeline
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  docker-build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t hrm-ci-test ./docker-env
+
+      - name: Run Container Test
+        run: docker run --rm hrm-ci-test python3 --version
